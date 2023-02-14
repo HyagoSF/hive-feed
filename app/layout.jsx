@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
       */}
 			<head />
 			<body
-				className={` ${roboto.variable} font-roboto mx-4 md:mx-48 xl:mx-96 `}>
+				className={` ${roboto.variable} font-roboto mx-4 md:mx-48 xl:mx-96 bg-gray-300`}>
 				<Nav />
 				{/* children here means "every page" */}
 				{children}
