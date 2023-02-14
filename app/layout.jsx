@@ -4,6 +4,8 @@ import Nav from './auth/Nav';
 // Import the font
 import { Roboto } from '@next/font/google';
 
+import QueryWrapper from './auth/QueryWrapper';
+
 // Configure the font
 const roboto = Roboto({
 	subsets: ['latin'],
@@ -22,9 +24,12 @@ export default function RootLayout({ children }) {
 			<head />
 			<body
 				className={` ${roboto.variable} font-roboto mx-4 md:mx-48 xl:mx-96 bg-gray-300`}>
-				<Nav />
-				{/* children here means "every page" */}
-				{children}
+				{/* Wrap all my body content with this query wrapper =) */}
+				<QueryWrapper>
+					<Nav />
+					{/* children here means "every page" */}
+					{children}
+				</QueryWrapper>
 			</body>
 		</html>
 	);

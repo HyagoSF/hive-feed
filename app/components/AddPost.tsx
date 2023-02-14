@@ -26,7 +26,7 @@ export default function AddPost() {
 			<div className="flex items-center justify-between gap-2">
 				<p
 					className={`font-bold text-sm ${
-						title.length > 300 ? 'text-red-600' : 'text-gray-600'
+						title.length > 350 ? 'text-red-600' : 'text-gray-600'
 					}`}>{`${title.length}/350`}</p>
 				<button
 					disabled={isDisabled}
