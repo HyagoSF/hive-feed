@@ -54,7 +54,7 @@ export default async function handler(
 			// 	post: result,
 			// });
 			res.status(200).json({
-				message: 'Post added successfully',
+				message: 'Post added successfully 🔥',
 				post: result,
 			});
 		} catch (err) {

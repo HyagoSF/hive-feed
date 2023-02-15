@@ -3,7 +3,10 @@
 import { useState } from 'react';
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
+
+import toast, { Toaster } from 'react-hot-toast';
+import { error } from 'console';
 
 export default function AddPost() {
 	const [title, setTitle] = useState('');
@@ -11,6 +14,16 @@ export default function AddPost() {
 
 	// Access the client
 	const queryClient = useQueryClient();
+
+	// Notify the user if there is an error
+	const notify = (message: string, type: string) => {
+		if (type === 'error') {
+			return toast.error(message);
+		}
+		if (type === 'success') {
+			return toast.success(message);
+		}
+	};
 
 	// Create a query
 	// const query = useQuery({
@@ -28,13 +41,19 @@ export default function AddPost() {
 		async (title: string) =>
 			await axios.post('/api/posts/addPost', { title }),
 		{
-			onError: (err) => {
-				console.log(err);
-				setTitle('');
+			onError: (err: any) => {
+				const errorMessage = err.response.data.message;
+				// notify(errorMessage);
+				if (err instanceof AxiosError) {
+					notify(errorMessage, 'error');
+				}
 				setIsDisabled(false);
 			},
 			onSuccess: (data) => {
-				console.log(data);
+				const successMessage = data.data.message;
+
+				// console.log(data);
+				notify(successMessage, 'success');
 				setTitle('');
 				setIsDisabled(false);
 			},
@@ -52,6 +71,9 @@ export default function AddPost() {
 		<form
 			onSubmit={onSubmitFormHandler}
 			className="bg-white my-8 p-8 rounded-md">
+			{/* Here is for the toaster notification */}
+			<Toaster position="top-center" reverseOrder={false} />
+
 			{/* Here is for the form input */}
 			<div className=" flex flex-col my-4">
 				<textarea
