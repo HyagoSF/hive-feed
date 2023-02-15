@@ -2,12 +2,56 @@
 
 import { useState } from 'react';
 
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
+
 export default function AddPost() {
 	const [title, setTitle] = useState('');
 	const [isDisabled, setIsDisabled] = useState(false);
 
+	// Access the client
+	const queryClient = useQueryClient();
+
+	// Create a query
+	// const query = useQuery({
+	// 	queryKey: 'posts',
+	// 	queryFn: () => axios.get('/api/posts/getPosts'),
+	// });
+
+	// Create a mutation/post
+	const { mutate } = useMutation(
+		// mutation using axios post request
+		// {
+		// 	mutationFn: async (title) =>
+		// 		await axios.post('/api/posts/addPost', { title }),
+		// }
+		async (title: string) =>
+			await axios.post('/api/posts/addPost', { title }),
+		{
+			onError: (err) => {
+				console.log(err);
+				setTitle('');
+				setIsDisabled(false);
+			},
+			onSuccess: (data) => {
+				console.log(data);
+				setTitle('');
+				setIsDisabled(false);
+			},
+		}
+	);
+
+	const onSubmitFormHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		setIsDisabled(true);
+
+		mutate(title);
+	};
+
 	return (
-		<form className="bg-white my-8 p-8 rounded-md">
+		<form
+			onSubmit={onSubmitFormHandler}
+			className="bg-white my-8 p-8 rounded-md">
 			{/* Here is for the form input */}
 			<div className=" flex flex-col my-4">
 				<textarea
