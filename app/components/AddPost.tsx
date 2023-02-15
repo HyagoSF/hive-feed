@@ -6,7 +6,6 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 
 import toast, { Toaster } from 'react-hot-toast';
-import { error } from 'console';
 
 export default function AddPost() {
 	const [title, setTitle] = useState('');
@@ -25,6 +24,7 @@ export default function AddPost() {
 		}
 	};
 
+	// I'm comment this out because tris is in my 
 	// Create a query
 	// const query = useQuery({
 	// 	queryKey: 'posts',
