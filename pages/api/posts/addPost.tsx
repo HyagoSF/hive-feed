@@ -49,18 +49,11 @@ export default async function handler(
 				},
 			});
 
-			// return res.status(200).json({
-			// 	message: 'Post added successfully',
-			// 	post: result,
-			// });
 			res.status(200).json({
 				message: 'Post added successfully 🔥',
 				post: result,
 			});
 		} catch (err) {
-			// return res.status(403).json({
-			// 	err: 'Something went wrong, try again later',
-			// });
 			res.status(403).json({
 				err: 'Something went wrong, try again later',
 			});

@@ -17,7 +17,10 @@ model Post {
   title     String
   published Boolean  @default(false)
   userId    String
+  // "user" will be the user where the userId is equal to the id of the "User"
   user      User     @relation(fields: [userId], references: [id])
+
+  // @@map("posts")
 }
 
 // All of this below is to make the auth works, when the user create an account with google, we will create an account, a session, and a user in the database with the information we get from google oauth api and store the refresh token, access token, and other information in the account table. 
@@ -27,12 +30,12 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? 
-  access_token      String? 
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? 
+  id_token          String?
   session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)

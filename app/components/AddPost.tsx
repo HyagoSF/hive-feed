@@ -10,21 +10,26 @@ import toast, { Toaster } from 'react-hot-toast';
 export default function AddPost() {
 	const [title, setTitle] = useState('');
 	const [isDisabled, setIsDisabled] = useState(false);
+	let toastPostId: string;
 
 	// Access the client
-	const queryClient = useQueryClient();
+	// const queryClient = useQueryClient();
 
 	// Notify the user if there is an error
 	const notify = (message: string, type: string) => {
+		if (type === 'loading') {
+			toastPostId = toast.loading(message);
+			return toastPostId;
+		}
 		if (type === 'error') {
-			return toast.error(message);
+			return toast.error(message, { id: toastPostId });
 		}
 		if (type === 'success') {
-			return toast.success(message);
+			return toast.success(message, { id: toastPostId });
 		}
 	};
 
-	// I'm comment this out because tris is in my 
+	// I'm comment this out because tris is in my
 	// Create a query
 	// const query = useQuery({
 	// 	queryKey: 'posts',
@@ -33,16 +38,11 @@ export default function AddPost() {
 
 	// Create a mutation/post
 	const { mutate } = useMutation(
-		// mutation using axios post request
-		// {
-		// 	mutationFn: async (title) =>
-		// 		await axios.post('/api/posts/addPost', { title }),
-		// }
 		async (title: string) =>
 			await axios.post('/api/posts/addPost', { title }),
 		{
 			onError: (err: any) => {
-				const errorMessage = err.response.data.message;
+				const errorMessage = err?.response?.data.message;
 				// notify(errorMessage);
 				if (err instanceof AxiosError) {
 					notify(errorMessage, 'error');
@@ -52,7 +52,6 @@ export default function AddPost() {
 			onSuccess: (data) => {
 				const successMessage = data.data.message;
 
-				// console.log(data);
 				notify(successMessage, 'success');
 				setTitle('');
 				setIsDisabled(false);
@@ -63,6 +62,7 @@ export default function AddPost() {
 	const onSubmitFormHandler = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setIsDisabled(true);
+		notify('Loading...', 'loading');
 
 		mutate(title);
 	};
