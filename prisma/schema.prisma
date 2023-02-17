@@ -11,16 +11,28 @@ datasource db {
 }
 
 model Post {
+  id        String    @id @default(cuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  title     String
+  published Boolean   @default(false)
+  userId    String
+  // "user" will be the user where the userId is equal to the id of the "User"
+  user      User      @relation(fields: [userId], references: [id])
+  Comment   Comment[]
+
+  // @@map("posts")
+}
+
+model Comment {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  title     String
-  published Boolean  @default(false)
+  text      String
   userId    String
-  // "user" will be the user where the userId is equal to the id of the "User"
-  user      User     @relation(fields: [userId], references: [id])
-
-  // @@map("posts")
+  postId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
 }
 
 // All of this below is to make the auth works, when the user create an account with google, we will create an account, a session, and a user in the database with the information we get from google oauth api and store the refresh token, access token, and other information in the account table. 
@@ -43,14 +55,6 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -60,6 +64,15 @@ model User {
   accounts      Account[]
   sessions      Session[]
   Post          Post[]
+  Comment       Comment[]
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {
