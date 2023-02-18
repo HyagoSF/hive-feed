@@ -19,8 +19,7 @@ model Post {
   userId    String
   // "user" will be the user where the userId is equal to the id of the "User"
   user      User      @relation(fields: [userId], references: [id])
-  Comment   Comment[]
-
+  comments  Comment[]
   // @@map("posts")
 }
 
@@ -28,6 +27,7 @@ model Comment {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  size      Int      @default(0)
   text      String
   userId    String
   postId    String
@@ -58,13 +58,13 @@ model Account {
 model User {
   id            String    @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String    @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
   Post          Post[]
-  Comment       Comment[]
+  comments      Comment[]
 }
 
 model Session {

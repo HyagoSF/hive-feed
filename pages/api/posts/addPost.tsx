@@ -24,7 +24,11 @@ export default async function handler(
 		// Get the user id from the session
 		const prismaUser = await prisma.user.findUnique({
 			where: {
-				email: session?.user?.email,
+				email:session?.user?.email,
+				
+					// session.user?.email != null
+					// 	? session.user.email
+					// 	: undefined,
 			},
 		});
 

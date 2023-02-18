@@ -3,10 +3,22 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-interface Post {
-	avatar: string;
-	name: string;
-	title: string;
+// interface Post {
+// 	avatar: string;
+// 	name: string;
+// 	title: string;
+// }
+
+interface Comments {
+	id: string;
+	createdAt: string;
+	postId: string;
+	userId: string;
+	text: string;
+	user: {
+		name: string;
+		image: string;
+	};
 }
 
 export default function Post({
@@ -14,12 +26,16 @@ export default function Post({
 	name,
 	title,
 	id,
+	comments,
 }: {
 	avatar: string;
 	name: string;
 	title: string;
 	id: string;
+	comments: Comments[];
 }) {
+	console.log(comments);
+
 	return (
 		<div className="bg-white my-8 p-8 rounded-lg">
 			<div className="flex items-center gap-2">
@@ -40,10 +56,28 @@ export default function Post({
 			<div className="flex gap-4 cursor-pointer items-center">
 				<Link href={`/post/${id}`}>
 					<h4 className="text-sm text-teal-600 font-bold border-2 p-1 rounded-lg border-teal-600 hover:text-white hover:bg-teal-600">
-						Comment
+						Comments {comments.length}
 					</h4>
 				</Link>
 			</div>
+
+			{comments.map((comment) => (
+				<div className="flex items-center gap-2 mt-4">
+					<Image
+						className="rounded-full"
+						width={32}
+						height={32}
+						src={comment.user.image}
+						alt="avatar"
+					/>
+					<p className="text-gray-700 text-sm bg-gray-300 w-full p-1 rounded-lg">
+						<span className="font-bold">
+							{comment.user.name}: {'  '}
+						</span>
+						{comment.text}{' '}
+					</p>
+				</div>
+			))}
 		</div>
 	);
 }

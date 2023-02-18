@@ -15,12 +15,18 @@ export default async function handler(
 				// include the user who created the post in the response
 				include: {
 					user: true,
+					comments: {
+						include: {
+							user: true,
+						},
+					},
 				},
 
 				orderBy: {
 					createdAt: 'desc',
 				},
 			});
+
 			res.status(200).json(allPosts);
 		} catch (error) {
 			res.status(403).json({ err: 'Error fetching posts' });

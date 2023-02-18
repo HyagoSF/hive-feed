@@ -7,16 +7,8 @@ import axios, { all } from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import Post from './components/Post';
 
-interface Post {
-	id: string;
-	title: string;
-	user: {
-		name: string;
-		image: string;
-	};
-	data: Object,
-	body: string;
-}
+// Adding the types for all the posts
+import { PostType } from './types/Posts';
 
 // Fetch all posts from server
 const allPosts = async () => {
@@ -25,7 +17,8 @@ const allPosts = async () => {
 };
 
 export default function Home() {
-	const { data, error, isLoading } = useQuery({
+	// Fetch all posts, and saying that the data is of an array type of PostType[]
+	const { data, error, isLoading } = useQuery<PostType[]>({
 		queryKey: ['posts'],
 		queryFn: allPosts,
 	});
@@ -39,10 +32,16 @@ export default function Home() {
 			<AddPost />
 
 			{/* <PostList /> */}
-			{data?.map((post: Post) => (
-				<Post key={post.id} avatar={post.user.image} name={ post.user.name } title={post.title} id={post.id}/>
+			{data?.map((post) => (
+				<Post
+					key={post.id}
+					avatar={post.user.image}
+					name={post.user.name}
+					title={post.title}
+					id={post.id}
+					comments={post.comments}
+				/>
 			))}
-
 		</main>
 	);
 }
