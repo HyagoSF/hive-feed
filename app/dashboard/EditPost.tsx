@@ -2,8 +2,10 @@
 
 import { useState } from 'react';
 
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
+
+import { QueryClient } from '@tanstack/react-query';
 
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -15,6 +17,9 @@ export default function EditPost({
 	const [title, setTitle] = useState('');
 	const [isDisabled, setIsDisabled] = useState(false);
 	let toastPostId: string;
+
+	// To access the client, and use the queryClient to invalidate the query ( to refetch the data when the mutation is done)
+	const queryClient = useQueryClient();
 
 	// Notify the user if there is an error
 	const notify = (message: string, type: string) => {
@@ -45,6 +50,8 @@ export default function EditPost({
 			},
 			onSuccess: (data) => {
 				const successMessage = data.data.message;
+
+				queryClient.invalidateQueries({ queryKey: ['authUserPosts'] });
 
 				notify(successMessage, 'success');
 				setTitle('');

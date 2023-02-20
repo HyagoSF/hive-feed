@@ -12,8 +12,8 @@ export default function AddPost() {
 	const [isDisabled, setIsDisabled] = useState(false);
 	let toastPostId: string;
 
-	// Access the client
-	// const queryClient = useQueryClient();
+	// To access the client, and use the queryClient to invalidate the query ( to refetch the data when the mutation is done)
+	const queryClient = useQueryClient();
 
 	// Notify the user if there is an error
 	const notify = (message: string, type: string) => {
@@ -28,13 +28,6 @@ export default function AddPost() {
 			return toast.success(message, { id: toastPostId });
 		}
 	};
-
-	// I'm comment this out because tris is in my
-	// Create a query
-	// const query = useQuery({
-	// 	queryKey: 'posts',
-	// 	queryFn: () => axios.get('/api/posts/getPosts'),
-	// });
 
 	// Create a mutation/post
 	const { mutate } = useMutation(
@@ -51,6 +44,7 @@ export default function AddPost() {
 			},
 			onSuccess: (data) => {
 				const successMessage = data.data.message;
+				queryClient.invalidateQueries({ queryKey: ['posts'] });
 
 				notify(successMessage, 'success');
 				setTitle('');
