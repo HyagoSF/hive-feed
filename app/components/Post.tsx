@@ -48,7 +48,7 @@ export default function Post({
 			</div>
 
 			<div className="my-8">
-				<p className="break-all">{title}</p>
+				<p className="break-words">{title}</p>
 			</div>
 
 			<div className="flex gap-4 cursor-pointer items-center">

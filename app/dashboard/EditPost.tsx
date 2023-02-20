@@ -5,8 +5,6 @@ import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 
-import { QueryClient } from '@tanstack/react-query';
-
 import toast, { Toaster } from 'react-hot-toast';
 
 export default function EditPost({
@@ -100,7 +98,7 @@ export default function EditPost({
 					disabled={isDisabled}
 					type="submit"
 					className="bg-teal-600 text-white font-bold py-2 px-6 rounded-xl disabled:opacity-25 scale-50">
-					Edit post
+					Confirm
 				</button>
 			</div>
 		</form>
