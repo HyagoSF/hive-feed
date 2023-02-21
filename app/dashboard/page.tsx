@@ -6,6 +6,7 @@ import { authOptions } from '../../pages/api/auth/[...nextauth]';
 
 import MyPosts from './MyPosts';
 
+
 import { redirect } from 'next/navigation';
 
 export default async function Dashboard() {
@@ -19,7 +20,7 @@ export default async function Dashboard() {
 		<div className="flex flex-col items-center text-3xl font-bold justify-center py-2">
 			<h1>Welcome back {session?.user?.name}</h1>
 
-			<MyPosts />
+			<MyPosts session={session} />
 		</div>
 	);
 }

@@ -8,12 +8,16 @@ import EditPost from './EditPost';
 
 import Toggle from './Toggle';
 
+import { Session } from '../types/Session';
+
+import toast, { Toaster } from 'react-hot-toast';
+
 const fetchAllUsersPosts = async () => {
 	const { data } = await axios.get('/api/posts/authUserPosts');
 	return data;
 };
 
-export default function MyPosts() {
+export default function MyPosts({ session }: { session: Session }) {
 	const { data, isLoading } = useQuery<AuthUserPosts>({
 		queryKey: ['authUserPosts'],
 		queryFn: fetchAllUsersPosts,
@@ -30,12 +34,15 @@ export default function MyPosts() {
 
 	const queryClient = useQueryClient();
 
+	// Using the deleteToastId to prevent multiple toasts from showing up at the same time
+	let deleteToastId: string;
+
 	/**
 	 * Handlers for buttons
 	 */
 	const onRealDeleteHandler = async (postId: string) => {
 		await axios.delete('/api/posts/deletePost', {
-			data: { id: postId },
+			data: { postId: postId, session: session },
 		});
 	};
 
@@ -55,15 +62,19 @@ export default function MyPosts() {
 	// Mutation to delete a post
 	const { mutate } = useMutation(onRealDeleteHandler, {
 		onSuccess: () => {
-			// console.log(data?.Post);
 			queryClient.invalidateQueries({ queryKey: ['authUserPosts'] });
+			toast.success('Post deleted successfully', { id: deleteToastId });
 		},
-		onError: (err) => {
-			console.log(err);
+		onError: (error: { message: string }) => {
+			toast.error(error.message, { id: deleteToastId });
 		},
 	});
 
 	const deletePost = () => {
+		deleteToastId = toast.loading('Deleting post...', {
+			id: deleteToastId,
+		});
+
 		mutate(postIdToDelete);
 		setPostIdToDelete('');
 		setShowDeleteModal(false);
@@ -71,14 +82,25 @@ export default function MyPosts() {
 
 	return (
 		<div>
-			<h1 className="my-8 text-purple-700">My Posts</h1>
+			<Toaster
+				position="top-center"
+				toastOptions={{
+					style: {
+						fontSize: '1rem',
+					},
+				}}
+				reverseOrder={false}
+			/>
+			<h1 className="my-8 text-slate-700 text-center text-5xl">
+				My Posts
+			</h1>
 
 			{isLoading && <p>Loading...</p>}
 
 			{data &&
 				data?.Post.map((post) => (
 					<div key={post.id}>
-						<div className="gap-12 m-8 bg-gray-400 p-8 rounded-lg">
+						<div className="gap-12 m-8 bg-gray-400 p-8  rounded-xl">
 							<div className="flex justify-between mb-8">
 								<p className="break-all">{post.title}</p>
 								<button
@@ -88,7 +110,12 @@ export default function MyPosts() {
 								</button>
 							</div>
 
-							{editComments[post.id] && <EditPost post={post} />}
+							{editComments[post.id] && (
+								<EditPost
+									post={post}
+									onEditButtonHandler={onEditButtonHandler}
+								/>
+							)}
 
 							<div className="mt-4 bg-gray-300 text-base p-3 rounded-lg">
 								{post.comments.length !== 1 ? (

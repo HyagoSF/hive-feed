@@ -9,10 +9,13 @@ import toast, { Toaster } from 'react-hot-toast';
 
 export default function EditPost({
 	post,
+	onEditButtonHandler,
 }: {
 	post: { id: string; title: string };
+	onEditButtonHandler: (postId: string) => void;
 }) {
 	const [title, setTitle] = useState('');
+
 	const [isDisabled, setIsDisabled] = useState(false);
 	let toastPostId: string;
 
@@ -64,12 +67,15 @@ export default function EditPost({
 		notify('Loading...', 'loading');
 
 		mutate(title);
+
+		//to close the edit form when the user submits the form
+		onEditButtonHandler(post.id);
 	};
 
 	return (
 		<form
 			onSubmit={onSubmitFormHandler}
-			className="bg-white my-4 p-4 rounded-md w-10/12 mx-auto ">
+			className="bg-gray-300 my-4 p-4 rounded-md w-full">
 			{/* Here is for the toaster notification */}
 			<Toaster position="top-center" reverseOrder={false} />
 
@@ -97,7 +103,7 @@ export default function EditPost({
 				<button
 					disabled={isDisabled}
 					type="submit"
-					className="bg-teal-600 text-white font-bold py-2 px-6 rounded-xl disabled:opacity-25 scale-50">
+					className="bg-teal-600 text-white font-bold text-sm py-2 px-6 rounded-xl disabled:opacity-25 ">
 					Confirm
 				</button>
 			</div>
