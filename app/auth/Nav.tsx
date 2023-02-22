@@ -12,7 +12,7 @@ export default async function Nav() {
 	return (
 		<nav className="flex justify-between items-center py-8">
 			<Link href={'/'}>
-				<h1 className="font-bold text-lg">Send...</h1>
+				<h1 className="font-bold text-4xl contrast-200 text-emerald-700">HiveFeed</h1>
 			</Link>
 			<ul className="flex items-center gap-6">
 				{/* I can have a client component here inside this server component*/}
@@ -31,6 +31,3 @@ export default async function Nav() {
 		</nav>
 	);
 }
-
-
-

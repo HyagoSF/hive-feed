@@ -15,7 +15,7 @@ export default async function handler(
 	 */
 	const postToBeDeleted = await prisma.Post.findUnique({
 		where: {
-			idd: postId,
+			id: postId,
 		},
 	});
 

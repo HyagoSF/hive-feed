@@ -100,8 +100,8 @@ export default function MyPosts({ session }: { session: Session }) {
 			{data &&
 				data?.Post.map((post) => (
 					<div key={post.id}>
-						<div className="gap-12 m-8 bg-gray-400 p-8  rounded-xl">
-							<div className="flex justify-between mb-8">
+						<div className="gap-12 m-8 bg-gray-400 p-8  rounded-xl ">
+							<div className="flex justify-between mb-8 ">
 								<p className="break-all">{post.title}</p>
 								<button
 									onClick={() => onEditButtonHandler(post.id)}
@@ -125,7 +125,7 @@ export default function MyPosts({ session }: { session: Session }) {
 								)}
 
 								{post.comments.map((comment) => (
-									<div key={comment.id} className="">
+									<div key={comment.id}>
 										<p className="bg-gray-200 rounded-lg p-1 mt-4">
 											{comment.text}
 										</p>

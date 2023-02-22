@@ -1,9 +1,10 @@
-export type PostType = {
+export type Posts = {
 	id: string;
 	title: string;
 	user: {
 		name: string;
 		image: string;
+		avatar: string;
 	};
 	comments?: {
 		id: string;

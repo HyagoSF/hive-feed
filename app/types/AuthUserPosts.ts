@@ -16,8 +16,7 @@ export type AuthUserPosts = {
 			createdAt: string;
 			postId: string;
 			userId: string;
-            text: string;
-
+			text: string;
 		}[];
 	}[];
 };

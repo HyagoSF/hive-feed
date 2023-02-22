@@ -6,7 +6,6 @@ import { authOptions } from '../../pages/api/auth/[...nextauth]';
 
 import MyPosts from './MyPosts';
 
-
 import { redirect } from 'next/navigation';
 
 export default async function Dashboard() {

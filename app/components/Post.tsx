@@ -3,12 +3,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-// interface Post {
-// 	avatar: string;
-// 	name: string;
-// 	title: string;
-// }
-
 interface Comments {
 	id: string;
 	createdAt: string;
@@ -20,6 +14,12 @@ interface Comments {
 		image: string;
 	};
 }
+
+type URL = {
+	params: {
+		slug: string;
+	};
+};
 
 export default function Post({
 	avatar,
@@ -59,7 +59,7 @@ export default function Post({
 				</Link>
 			</div>
 
-			{comments.map((comment) => (
+			{/* {comments.map((comment) => (
 				<div key={comment.id} className="flex items-center gap-2 mt-4">
 					<Image
 						className="rounded-full"
@@ -75,7 +75,7 @@ export default function Post({
 						{comment.text}{' '}
 					</p>
 				</div>
-			))}
+			))} */}
 		</div>
 	);
 }

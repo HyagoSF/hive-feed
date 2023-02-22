@@ -17,16 +17,7 @@ export default async function handler(
 			});
 		}
 
-		// const prismaUser = await prisma.user.findUnique({
-		// 	where: {
-		// 		email: session?.user?.email,
-		// 	},
-		// });
-
-		// console.log(prismaUser);
-
 		// Get Auth Users Posts and Comments
-
 		try {
 			const data = await prisma.user.findUnique({
 				where: {
@@ -50,32 +41,5 @@ export default async function handler(
 				message: 'Something went wrong',
 			});
 		}
-
-		// const posts = await prisma.post.findMany({
-		// 	where: {
-		// 		userId: prismaUser.id,
-		// 	},
-		// 	include: {
-		// 		user: true,
-		// 		comments: true,
-		// 	},
-		// });
-
-		// const comments = await prisma.comment.findMany({
-		// 	where: {
-		// 		userId: prismaUser.id,
-		// 	},
-		// 	include: {
-		// 		user: true,
-		// 		post: true,
-		// 	},
-		// });
-
-		// res.status(200).json({
-		// 	posts: posts,
-		// 	comments: comments,
-		// });
 	}
-
-	// res.status(200).json({});
 }
