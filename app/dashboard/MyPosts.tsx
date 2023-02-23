@@ -12,6 +12,8 @@ import { Session } from '../types/Session';
 
 import toast, { Toaster } from 'react-hot-toast';
 
+import { motion as m } from 'framer-motion';
+
 const fetchAllUsersPosts = async () => {
 	const { data } = await axios.get('/api/posts/authUserPosts');
 	return data;
@@ -91,7 +93,7 @@ export default function MyPosts({ session }: { session: Session }) {
 				}}
 				reverseOrder={false}
 			/>
-			<h1 className="my-8 text-slate-700 text-center text-5xl">
+			<h1 className="my-8 text-emerald-700 text-center text-5xl">
 				My Posts
 			</h1>
 
@@ -100,12 +102,12 @@ export default function MyPosts({ session }: { session: Session }) {
 			{data &&
 				data?.Post.map((post) => (
 					<div key={post.id}>
-						<div className="gap-12 m-8 bg-gray-400 p-8  rounded-xl ">
+						<div className="gap-12 m-8 bg-white px-3 pt-3 pb-2  rounded-xl ">
 							<div className="flex justify-between mb-8 ">
 								<p className="break-all">{post.title}</p>
 								<button
 									onClick={() => onEditButtonHandler(post.id)}
-									className="text-sm hover:bg-white hover:rounded-lg px-2 hover:animate-bounce max-h-12">
+									className="text-sm hover:bg-gray-200 hover:rounded-lg px-2 hover:animate-bounce max-h-12">
 									Edit
 								</button>
 							</div>
@@ -117,7 +119,7 @@ export default function MyPosts({ session }: { session: Session }) {
 								/>
 							)}
 
-							<div className="mt-4 bg-gray-300 text-base p-3 rounded-lg">
+							<div className="mt-4 bg-gray-100 text-base p-2 rounded-lg">
 								{post.comments.length !== 1 ? (
 									<h1>{post.comments.length} Comments</h1>
 								) : (
@@ -134,13 +136,15 @@ export default function MyPosts({ session }: { session: Session }) {
 							</div>
 
 							<div className="flex justify-end mt-4 ">
-								<button
+								<m.button
+									whileHover={{ scale: 1.1 }}
+									whileTap={{ scale: 0.9 }}
 									className="text-red-500 text-lg hover:bg-red-500 p-1 rounded-lg hover:text-white"
 									onClick={() => {
 										onShowModalDeletePostHandler(post.id);
 									}}>
 									Delete
-								</button>
+								</m.button>
 								{showDeleteModal && (
 									<Toggle
 										showModal={setShowDeleteModal}

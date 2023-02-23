@@ -1,6 +1,8 @@
 // Component to toggle the delete button to show a Modal to confirm the deletion of a post
 'use client';
 
+import { motion as m } from 'framer-motion';
+
 export default function Toggle({
 	showModal,
 	onRealDelete,
@@ -10,9 +12,24 @@ export default function Toggle({
 	onRealDelete: Function;
 	postId: string;
 }) {
+	const initial = {
+		// opacity: 0,
+		// scale: 0.5,
+		y: '-100%',
+	};
+
+	const animate = {
+		// opacity: 1,
+		// scale: 1,
+		y: '0',
+	};
+
 	return (
-		<div
-			className=" fixed w-full h-full z-20 bg-black/50 top-0 left-0 "
+		<m.div
+			initial={initial}
+			animate={animate}
+			transition={{ duration: 0.5 }}
+			className=" fixed w-full h-full z-20 bg-gray-300/20 top-0 left-0 "
 			onClick={() => {
 				showModal(false);
 			}}>
@@ -42,6 +59,6 @@ export default function Toggle({
 					</button>
 				</div>
 			</div>
-		</div>
+		</m.div>
 	);
 }

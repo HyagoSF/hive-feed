@@ -9,6 +9,7 @@ import Post from './components/Post';
 
 // Adding the types for all the posts
 import { PostType } from './types/Posts';
+import Link from 'next/link';
 
 // Fetch all posts from server
 const allPosts = async () => {
@@ -29,6 +30,10 @@ export default function Home() {
 
 	return (
 		<main>
+			<Link href="/" className="ml-1 text-lg font-bold text-emerald-700 ">
+				Home
+			</Link>
+
 			<AddPost />
 
 			{/* <PostList /> */}

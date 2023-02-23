@@ -20,6 +20,11 @@ model Post {
   // "user" will be the user where the userId is equal to the id of the "User"
   user      User      @relation(fields: [userId], references: [id])
   comments  Comment[]
+  // create a table to store the likes in this post
+  likes     Int       @default(0)
+  // create a table to store the dislikes in this post
+  dislikes  Int       @default(0)
+
   // @@map("posts")
 }
 
