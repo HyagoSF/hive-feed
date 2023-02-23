@@ -37,7 +37,7 @@ export default function Home() {
 			<AddPost />
 
 			{/* <PostList /> */}
-			{data?.map((post) => (
+			{data?.map((post: any) => (
 				<Post
 					key={post.id}
 					avatar={post.user.image}

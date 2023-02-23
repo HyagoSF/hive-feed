@@ -19,7 +19,7 @@ const fetchAllUsersPosts = async () => {
 	return data;
 };
 
-export default function MyPosts({ session }: { session: Session }) {
+export default function MyPosts({ session }: { session: any }) {
 	const { data, isLoading } = useQuery<AuthUserPosts>({
 		queryKey: ['authUserPosts'],
 		queryFn: fetchAllUsersPosts,
