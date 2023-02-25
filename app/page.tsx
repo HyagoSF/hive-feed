@@ -11,11 +11,17 @@ import Post from './components/Post';
 import { PostType } from './types/Posts';
 import Link from 'next/link';
 
+import { ReactNode } from 'react';
+
 // Fetch all posts from server
 const allPosts = async () => {
 	const { data } = await axios.get('/api/posts/getPosts');
 	return data;
 };
+
+// const Props = {
+// 	children?: any;
+// }
 
 export default function Home() {
 	// Fetch all posts, and saying that the data is of an array type of PostType[]
