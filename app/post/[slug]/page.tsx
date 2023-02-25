@@ -52,15 +52,19 @@ export default function PostDetails(url: URL) {
 			<div>
 				{data && (
 					<>
-						<Link
-							href="/"
-							className="ml-1 text-lg font-bold text-emerald-700 ">
-							Home &gt; post
-							<a className="text-emerald-800">
-								{' '}
-								&gt; {data.specificPost.id}{' '}
-							</a>
-						</Link>
+						<div className="">
+							<Link
+								href="/"
+								className="ml-1 text-lg font-bold text-emerald-700 ">
+								Home
+							</Link>
+
+							<Link
+								href={`/post/${data.specificPost.id}`}
+								className="ml-1 text-lg font-bold text-emerald-700 ">
+								&gt; post &gt; {data.specificPost.id}{' '}
+							</Link>
+						</div>
 
 						<Post
 							avatar={data.specificPost.user.image}
