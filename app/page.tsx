@@ -20,7 +20,7 @@ const allPosts = async () => {
 };
 
 // const Props = {
-// 	children?: any;
+// 	children?: ReactNode;
 // }
 
 export default function Home() {

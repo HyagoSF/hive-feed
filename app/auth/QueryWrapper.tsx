@@ -12,7 +12,7 @@ interface Props {
 // Create a client
 const queryClient = new QueryClient();
 
-const QueryWrapper = ({ children }: any) => {
+const QueryWrapper = ({ children }: Props) => {
 	return (
 		<QueryClientProvider client={queryClient}>
 			{children}
