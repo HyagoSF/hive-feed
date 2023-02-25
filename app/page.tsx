@@ -11,7 +11,7 @@ import Post from './components/Post';
 import { PostType } from './types/Posts';
 import Link from 'next/link';
 
-import { ReactNode } from 'react';
+import { Fragment, ReactNode } from 'react';
 
 // Fetch all posts from server
 const allPosts = async () => {
@@ -30,12 +30,13 @@ export default function Home() {
 		queryFn: allPosts,
 	});
 
-	if (error) return error;
+	// if (error) return error;
 
 	if (isLoading) return <h1>Loading...</h1>;
 
 	return (
-		<main>
+		<>
+			<h1>hello</h1>
 			<Link href="/" className="ml-1 text-lg font-bold text-emerald-700 ">
 				Home
 			</Link>
@@ -53,6 +54,6 @@ export default function Home() {
 					comments={post.comments}
 				/>
 			))}
-		</main>
+		</>
 	);
 }
