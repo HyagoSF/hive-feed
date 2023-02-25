@@ -30,13 +30,12 @@ export default function Home() {
 		queryFn: allPosts,
 	});
 
-	// if (error) return error;
-
 	if (isLoading) return <h1>Loading...</h1>;
+
+	if (error) return <>{error}</>;
 
 	return (
 		<>
-			<h1>hello</h1>
 			<Link href="/" className="ml-1 text-lg font-bold text-emerald-700 ">
 				Home
 			</Link>

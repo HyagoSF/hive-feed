@@ -3,7 +3,7 @@ import Login from './Login';
 import Logged from './Logged';
 
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '../../pages/api/auth/[...nextauth]';
+import { authOptions } from '../../pages/api/auth/[...nextauth].js';
 
 export default async function Nav() {
 	const session = await getServerSession(authOptions);
@@ -12,7 +12,9 @@ export default async function Nav() {
 	return (
 		<nav className="flex justify-between items-center py-8">
 			<Link href={'/'}>
-				<h1 className="font-bold text-4xl contrast-200 text-emerald-700">HiveFeed</h1>
+				<h1 className="font-bold text-4xl contrast-200 text-emerald-700">
+					HiveFeed
+				</h1>
 			</Link>
 			<ul className="flex items-center gap-6">
 				{/* I can have a client component here inside this server component*/}

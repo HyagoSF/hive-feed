@@ -1,7 +1,7 @@
 'use client';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { SetStateAction, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -48,7 +48,10 @@ export default function AddComment({ postId }: Props) {
 			queryClient.invalidateQueries({ queryKey: ['detail-post'] });
 		},
 		onError: (err: any) => {
-			toast.error(err.response.data.message, { id: commentToaster });
+			// toast.error(err.response.data.message, { id: commentToaster });
+			if (err instanceof AxiosError) {
+				toast.error(err.response?.data.message, { id: commentToaster });
+			}
 		},
 	});
 

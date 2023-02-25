@@ -21,6 +21,15 @@ interface Comments {
 	};
 }
 
+interface PostProps {
+	avatar: string;
+	name: string;
+	title: string;
+	id: string;
+	comments: Comments[];
+	isInDetails?: boolean;
+}
+
 // type URL = {
 // 	params: {
 // 		slug: string;
@@ -34,14 +43,7 @@ export default function Post({
 	id,
 	comments,
 	isInDetails,
-}: {
-	avatar: string;
-	name: string;
-	title: string;
-	id: string;
-	comments: Comments[];
-	isInDetails?: boolean;
-}) {
+}: PostProps) {
 	const [isLiked, setIsLiked] = useState(false);
 	const [isDisliked, setIsDisliked] = useState(false);
 
@@ -71,7 +73,7 @@ export default function Post({
 		<m.div
 			initial={initial}
 			whileInView={animate}
-			transition={{ duration: duration }}
+			transition={{ duration: duration, ease: 'easeOut' }}
 			viewport={{ once: true }}
 			className="bg-white my-8 p-8 rounded-lg">
 			<div className="flex items-center gap-2">

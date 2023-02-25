@@ -14,13 +14,46 @@ import toast, { Toaster } from 'react-hot-toast';
 
 import { motion as m } from 'framer-motion';
 
-const fetchAllUsersPosts = async () => {
+interface UserProp {
+	email: string;
+	id: string;
+	image: string;
+	name: string;
+	Post?: Post[];
+}
+
+interface Post {
+	createdAt: string;
+	id: string;
+	title: string;
+	comments?: Comments[];
+}
+
+interface Comments {
+	createdAt: string;
+	id: string;
+	postId: string;
+	text: string;
+	userId: string;
+}
+
+const fetchAllUsersPosts = async (): Promise<UserProp> => {
 	const { data } = await axios.get('/api/posts/authUserPosts');
 	return data;
 };
 
-export default function MyPosts({ session }: { session: any }) {
-	const { data, isLoading } = useQuery<AuthUserPosts>({
+export default function MyPosts({
+	session,
+}: {
+	session: Session;
+}): JSX.Element {
+	// const { data, isLoading } = useQuery<AuthUserPosts>({
+	// 	queryKey: ['authUserPosts'],
+	// 	queryFn: fetchAllUsersPosts,
+	// });
+
+	// console.log(session);
+	const { data, isLoading } = useQuery({
 		queryKey: ['authUserPosts'],
 		queryFn: fetchAllUsersPosts,
 	});
@@ -100,7 +133,7 @@ export default function MyPosts({ session }: { session: any }) {
 			{isLoading && <p>Loading...</p>}
 
 			{data &&
-				data?.Post.map((post) => (
+				data?.Post?.map((post) => (
 					<div key={post.id}>
 						<div className="gap-12 m-8 bg-white px-3 pt-3 pb-2  rounded-xl ">
 							<div className="flex justify-between mb-8 ">
@@ -120,13 +153,13 @@ export default function MyPosts({ session }: { session: any }) {
 							)}
 
 							<div className="mt-4 bg-gray-100 text-base p-2 rounded-lg">
-								{post.comments.length !== 1 ? (
-									<h1>{post.comments.length} Comments</h1>
+								{post?.comments?.length !== 1 ? (
+									<h1>{post?.comments?.length} Comments</h1>
 								) : (
 									<h1> 1 Comment </h1>
 								)}
 
-								{post.comments.map((comment) => (
+								{post?.comments?.map((comment) => (
 									<div key={comment.id}>
 										<p className="bg-gray-200 rounded-lg p-1 mt-4">
 											{comment.text}
