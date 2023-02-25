@@ -37,16 +37,20 @@ interface Comments {
 	userId: string;
 }
 
+interface Session {
+	user: {
+		name: string;
+		email: string;
+		image: string;
+	};
+}
+
 const fetchAllUsersPosts = async (): Promise<UserProp> => {
 	const { data } = await axios.get('/api/posts/authUserPosts');
 	return data;
 };
 
-export default function MyPosts({
-	session,
-}: {
-	session: Session;
-}): JSX.Element {
+export default function MyPosts({ session }: { session: any }) {
 	// const { data, isLoading } = useQuery<AuthUserPosts>({
 	// 	queryKey: ['authUserPosts'],
 	// 	queryFn: fetchAllUsersPosts,

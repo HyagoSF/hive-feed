@@ -1,10 +1,10 @@
-export type Session = {
-	user?: {
-		name: string;
-		email: string;
-		image: string;
-	};
-};
+// export type Session = {
+// 	user?: {
+// 		name: string;
+// 		email: string;
+// 		image: string;
+// 	};
+// };
 
 // {
 //   user: {
