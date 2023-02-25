@@ -1,8 +1,9 @@
 // basically, this component is to wrap the whole app with the query client
 'use client';
 
-import { ReactNode } from 'react';
+// import { React } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactNode } from 'react';
 
 interface Props {
 	children?: ReactNode;
@@ -11,7 +12,7 @@ interface Props {
 // Create a client
 const queryClient = new QueryClient();
 
-const QueryWrapper = ({ children }: Props) => {
+const QueryWrapper = ({ children }: any) => {
 	return (
 		<QueryClientProvider client={queryClient}>
 			{children}
