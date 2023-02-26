@@ -1,23 +1,11 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// generator client {
-//   provider = "prisma-client-js"
-// }
-
-// datasource db {
-//   provider = "sqlite"
-//   url      = env("DATABASE_URL")
-// }
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider             = "mysql"
-  url                  = env("DATABASE_URL")
-  relationMode         = "prisma"
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model Post {
@@ -27,15 +15,12 @@ model Post {
   title     String
   published Boolean   @default(false)
   userId    String
-  // "user" will be the user where the userId is equal to the id of the "User"
+  likes     Int       @default(0)
+  dislikes  Int       @default(0)
   user      User      @relation(fields: [userId], references: [id])
   comments  Comment[]
-  // create a table to store the likes in this post
-  likes     Int       @default(0)
-  // create a table to store the dislikes in this post
-  dislikes  Int       @default(0)
 
-  // @@map("posts")
+  @@index([userId])
 }
 
 model Comment {
@@ -48,9 +33,12 @@ model Comment {
   postId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([text, postId])
+  @@index([userId])
+  @@index([postId])
 }
 
-// All of this below is to make the auth works, when the user create an account with google, we will create an account, a session, and a user in the database with the information we get from google oauth api and store the refresh token, access token, and other information in the account table. 
 model Account {
   id                String  @id @default(cuid())
   userId            String
@@ -64,10 +52,10 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model User {
@@ -88,6 +76,8 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model VerificationToken {
